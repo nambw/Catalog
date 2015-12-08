@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+	<div class="row divider blue">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row  main">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h1> Nam's Neighborhood Discounts</h1>
+		</div>
+	</div>
+	<div class="row divider blue">
+                <div class="col-md-12"></div>
+        </div>
+
+	<div class = 'flash'>
+	  {% with messages = get_flashed_messages() %}
+          {% if messages %}
+        	<ul>
+        	{% for message in messages %}
+            	   <li> <strong> {{ message }} </strong> </li>
+        	{% endfor %}
+        	</ul>
+       	  {% endif %}
+    	  {% endwith %}
+
+        </div>
+       <div class="row padding-top padding-bottom">
+	
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-1"></div>
+		<div class="col-md-3 restaurant-list">
+			{% if 'username' in session  %}
+			<a href="{{url_for('newCategory')}}">
+                              <span class="glyphicon text-right red" aria-hidden="true"></span>Add New Category
+                        </a>
+                        {% endif %}
+			<h2> Categories </h2>
+		     {% for icategory in categories %}
+			<a href = "{{url_for('showItem', category_id = icategory.id)}}">  <h3>{{icategory.name}}</h3> </a>
+	             {% endfor %}
+		 </div>
+		 <div class="col-md-7 col-md-offset-1  restaurant-list"> 
+			<h2> Recently Added Items </h2>
+		     {% for iItem in latest_item %}
+				<a id="itemDetail" href="{{url_for ('showItemDetail', item_id = iItem[2])}}"> 
+				<h3>{{iItem[0]}}  (  <span style="color: green"> {{ iItem[1]}}) </span> </h3>
+				</a>
+	             {% endfor %}
+	         </div>
+	</div>
+{% endblock %} 

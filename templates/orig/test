@@ -1,0 +1,14 @@
+function listitem(id) {
+    content = id
+    document.getElementById("cItems").innerHTML = content;
+    $.getJSON('/_listmyitem', {
+          category_id: id ,
+        }, function(data) {
+          var clist = [];
+          clist = jQuery.parseJSON(data);
+          content = " Returned from json";
+          content.append(clist);
+          document.getElementById("cItems").innerHTML = "Testing";
+        });
+        return false;
+

@@ -1,0 +1,79 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+       <div class="row top-menu">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 text-right">
+                                        </div>
+        </div>
+        <div class="row divider blue">
+                <div class="col-md-12"></div>
+        </div>
+        <div class="row banner main">
+                <div class="col-md-1"></div>
+                <div class="col-md-11 padding-none">
+                        <h1>Nam's Neighborhood Discounts</h1>
+                </div>
+        </div>
+
+<div class = 'flash'>
+                      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+        <div class="row">
+                <div class="col-md-3 restaurant-list">
+		     {% if 'username' in session %}
+                      <a href="{{url_for('newCategory')}}">
+                           <span class="glyphicon " aria-hidden="true"></span>Add Category
+                        </a>
+	             {% endif %}
+                     {% for icategory in categories %}
+ 			<a href = "{{url_for('showItem', category_id = icategory.id)}}">  <h3>{{icategory.name}}</h3> </a>
+                     {% endfor %}
+                 </div>
+		<div class=" col-md-8 col-md-offset-1 restaurant-list padding-none" >
+                        <h2> Category: {{ category.name }} </h2>
+			{% if 'username' in session and session['username'] == ownerName %}
+			<a href="{{url_for('editCategory', category_id = category.id )}}">
+                            <span class="glyphicon " aria-hidden="true"></span>Edit Category
+                        </a>
+                        <a href="{{url_for('deleteCategory', category_id = category.id )}}">
+                           <span class="glyphicon  aria-hidden="true"></span>Delete Category
+                        </a>
+			{% endif %}
+			{% if 'username' in session %}
+                        <a href="{{url_for('newItem', category_id = category.id )}}">
+                             <span class="glyphicon " aria-hidden="true"></span>Add Item
+                        </a>
+			{% endif %}
+			{% if items !=[] %}
+                                {% for i in items %}
+    					<a id="itemDetail" href="{{url_for ('showItemDetail', item_id = i.id)}}" data-toggle="popover" data-content="{{i.description}}" data-placement="bottom" title="{{i.description}}" ><h3> {{i.name}} </h3> </a>
+                                {% endfor %}
+                        {% endif %}
+
+                </div>
+
+        </div>
+
+{% endblock %}
+
+<script>
+$(document).ready( 
+		$('#itemDetail').popover(data-trigger="hover");
+		$('#tt).hover(function () {
+			#tt.tooltip('show')}););
+                $('#itemDetail).hover(function() {
+                        $('#itemDetail).popover('show');};); 
+</script>

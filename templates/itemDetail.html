@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner ">
+		<div class="col-md-7 col-md-offset-1 padding-none">
+			<a href = "{{url_for('showItem', category_id = item.category_id)}}"> <h2>{{ category_name }} 
+			</h2> </a>
+		</div>
+		<div class="col-md-5 padding-none">
+		</div>
+	</div>
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-11">
+					<div class="menu-item">
+						<h3>Item: {{item.name}}</h3>
+						{% if item.picture %}
+							<figure class="item">
+							<img src="{{ url_for('uploaded_file', filename=item.picture) }}">
+							</figure>
+						{% endif %}
+						<p>{{item.description}}</p>
+						<p class="menu-price">Price: ${{item.price}}</p>
+					        {% if isOwner %}
+						  <a href='{{url_for('editItem', category_id = item.category_id, item_id=item.id ) }}'>Edit</a> | 
+						  <a href='{{url_for('deleteItem', category_id = item.category_id, item_id=item.id ) }}'>Delete</a>
+						{% endif %}
+			                </div>
+			</div>
+		</div>
+{% endblock %}
